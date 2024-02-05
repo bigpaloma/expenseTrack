@@ -15,7 +15,7 @@ import userRoutes from "./routes/user.js"
 dotenv.config();
 const app = express();
 app.use(cors()); const corsOptions = {
-    origin: "http://localhost:3000" // frontend URI (ReactJS)
+    origin: "https://expense-tracker-y9qe.onrender.com" // frontend URI (ReactJS)
 }
 app.use(express.json());
 app.use(cors(corsOptions));

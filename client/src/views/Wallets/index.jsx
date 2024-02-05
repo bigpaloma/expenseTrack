@@ -40,7 +40,7 @@ export default function Wallets() {
 
     const addWallet = async (values, onSubmitProps) => {
         const addedWalletResponse = await fetch(
-            `http://localhost:4000/user/${_id}/wallets`,
+            `https://expense-tracker-api-obou.onrender.com/user/${_id}/wallets`,
             {
                 method: "POST",
                 headers: {
@@ -67,7 +67,7 @@ export default function Wallets() {
 
     const deleteWallet = async (wallet) => {
         const deletedWalletResponse = await fetch(
-            `http://localhost:4000/user/${_id}/wallet/${wallet._id}`,
+            `https://expense-tracker-api-obou.onrender.com/user/${_id}/wallet/${wallet._id}`,
             {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }

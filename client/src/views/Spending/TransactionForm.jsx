@@ -38,7 +38,7 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
         }
         values.category = isNewCat ? values.newCategory : values.category
         const addedTransactionResponse = await fetch(
-            `http://localhost:4000/user/${_id}`,
+            `https://expense-tracker-api-obou.onrender.com/user/${_id}`,
             {
                 method: "POST",
                 headers: {

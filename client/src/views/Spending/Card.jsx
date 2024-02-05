@@ -8,7 +8,7 @@ export default function Card({ setTransactionsArr, dataArr, isExpense }) {
 
     const deleteTransaction = async (trx) => {
         const deletedTransactionResponse = await fetch(
-            `http://localhost:4000/user/${_id}/${trx._id}`,
+            `https://expense-tracker-api-obou.onrender.com/user/${_id}/${trx._id}`,
             {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }

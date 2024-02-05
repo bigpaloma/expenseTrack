@@ -28,7 +28,7 @@ const LoginForm = () => {
 
     const register = async (values, onSubmitProps) => {
         const savedUserResponse = await fetch(
-            "http://localhost:4000/auth/register",
+            "https://expense-tracker-api-obou.onrender.com/auth/register",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -59,7 +59,7 @@ const LoginForm = () => {
 
     const login = async (values, onSubmitProps) => {
         const loggedInResponse = await fetch(
-            "http://localhost:4000/auth/login",
+            "https://expense-tracker-api-obou.onrender.com/auth/login",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
