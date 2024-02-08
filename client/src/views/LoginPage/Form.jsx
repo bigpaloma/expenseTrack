@@ -78,7 +78,7 @@ const LoginForm = () => {
                     token: loggedIn.token
                 })
             );
-            navigate("/Dashboard")
+            navigate("/dashboard")
         }
     }
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Card from "./Card"
 import getUserData from "../../utils/getUser";
-import TransactionForm from "./TransactionForm";
+import TransactionForm from "../../components/TransactionForm";
 
 export default function Spending() {
 

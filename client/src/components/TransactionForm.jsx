@@ -2,10 +2,10 @@ import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Button, Label, TextInput, Modal } from 'flowbite-react';
 import { Formik, Form, Field, useField } from "formik"
-import transactionSchema from "./yup/transactionSchema"
+import transactionSchema from "../views/Spending/yup/transactionSchema"
 import DatePicker from "react-datepicker";
-import CardRadio from "../../components/CardRadio";
-import { config } from "../../Environment";
+import CardRadio from "./CardRadio";
+import { config } from "../Environment";
 
 export default function TransactionForm({ wallets, userExpenses, userIncome, setTransactionsArr }) {
 
@@ -28,7 +28,7 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
         newCategory: "",
         type: "",
         amount: "",
-        wallet: wallets[0].name,
+        wallet: wallets.length === 0 ? "" : wallets[0].name,
         date: new Date()
     }
 
@@ -106,14 +106,14 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
     return (
         <>
             <div className="relative">
-                <div className="absolute -top-6 right-44">
-                    <Button className="fixed" type="submit" onClick={() => setOpenModal(true)}>Add Transaction</Button>
+                <div className="absolute top-0 right-0 w-36 bg-secondaryLight rounded-lg">
+                    <Button type="submit" onClick={() => setOpenModal(true)}>Add Transaction</Button>
                 </div>
             </div>
             <div className="flex">
                 <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
                     <Modal.Header>Add a new Transaction</Modal.Header>
-                    <Modal.Body className="overflow-y-scroll">
+                    <Modal.Body className="py-0">
                         <div className="space-y-6">
                             <Formik
                                 onSubmit={handleFormSubmit}
@@ -130,72 +130,76 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
                                 }) => (
                                     <Form>
                                         <div className="flex flex-col gap-3">
-                                            <div>
+                                            <div className="text-center">
                                                 <MyDatePicker name="date" />
                                             </div>
                                             <div>
                                                 <CardRadio handleRadioButtonChange={handleRadioButtonChange} transactionType={transactionType} a={"expense"} b={"income"} />
                                             </div>
-                                            <div>
-                                                <Label htmlFor="amount" value="Amount of your Transaction" />
-                                                <TextInput
-                                                    value={values.amount}
-                                                    id="amount"
-                                                    name="amount"
-                                                    type="number"
-                                                    placeholder="0"
-                                                    step="0.01"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    helperText={errors.amount ?
-                                                        (touched.amount ?
-                                                            <span className="text-red-400 text-sm">{errors.amount}</span> :
-                                                            null)
-                                                        : null
-                                                    }
-                                                />
-                                            </div>
-                                            <div>
-                                                <Label htmlFor="wallet" value={isExpense ? "from Wallet" : "to Wallet"} />
-                                                <Field as="select" id="wallet" value={values.wallet} onChange={handleChange} onBlur={handleBlur}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    {wallets.map((wallet) => (
-                                                        <option key={wallet._id} value={wallet.name}>{wallet.name}</option>
-                                                    ))}
-                                                </Field>
-                                            </div>
-                                            <div>
-                                                <Label htmlFor="category" value="Select a Category" />
-                                                <Field as="select" id="category" value={values.category} onChange={handleChange} onBlur={handleBlur}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    <option value="">Category</option>
-                                                    {isExpense ?
-                                                        expenseCategories.map((cat) => (
-                                                            <option key={cat} value={cat}>{cat}</option>
-                                                        ))
-                                                        :
-                                                        incomeCategories.map((cat) => (
-                                                            <option key={cat} value={cat}>{cat}</option>
+                                            <div className="flex justify-between gap-4">
+                                                <div className="w-1/2">
+                                                    <Label htmlFor="amount" value="Amount of your Transaction" />
+                                                    <TextInput
+                                                        value={values.amount}
+                                                        id="amount"
+                                                        name="amount"
+                                                        type="number"
+                                                        placeholder="0"
+                                                        step="0.01"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        helperText={errors.amount ?
+                                                            (touched.amount ?
+                                                                <span className="text-red-400 text-sm">{errors.amount}</span> :
+                                                                null)
+                                                            : null
+                                                        }
+                                                    />
+                                                </div>
+                                                <div className="w-1/2">
+                                                    <Label htmlFor="wallet" value={isExpense ? "from Wallet" : "to Wallet"} />
+                                                    <Field as="select" id="wallet" value={values.wallet} onChange={handleChange} onBlur={handleBlur}
+                                                        className="h-11 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        {wallets.map((wallet) => (
+                                                            <option key={wallet._id} value={wallet.name}>{wallet.name}</option>
                                                         ))}
-                                                </Field>
+                                                    </Field>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <Label htmlFor="newCategory" value="Or add a new Category" />
-                                                <TextInput
-                                                    value={values.newCategory}
-                                                    id="newCategory"
-                                                    name="newCategory"
-                                                    type="text"
-                                                    placeholder="food"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    helperText={errors.newCategory ?
-                                                        (touched.newCategory ?
-                                                            <span className="text-red-400 text-sm">{errors.newCategory}</span> :
-                                                            null)
-                                                        : null
-                                                    }
-                                                />
+                                            <div className="flex justify-between gap-4">
+                                                <div className="w-1/2">
+                                                    <Label htmlFor="category" value="Select a Category" />
+                                                    <Field as="select" id="category" value={values.category} onChange={handleChange} onBlur={handleBlur}
+                                                        className="h-11 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        <option value="">Category</option>
+                                                        {isExpense ?
+                                                            expenseCategories.map((cat) => (
+                                                                <option key={cat} value={cat}>{cat}</option>
+                                                            ))
+                                                            :
+                                                            incomeCategories.map((cat) => (
+                                                                <option key={cat} value={cat}>{cat}</option>
+                                                            ))}
+                                                    </Field>
+                                                </div>
+                                                <div className="w-1/2">
+                                                    <Label htmlFor="newCategory" value="Or add a new Category" />
+                                                    <TextInput
+                                                        value={values.newCategory}
+                                                        id="newCategory"
+                                                        name="newCategory"
+                                                        type="text"
+                                                        placeholder="food"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        helperText={errors.newCategory ?
+                                                            (touched.newCategory ?
+                                                                <span className="text-red-400 text-sm">{errors.newCategory}</span> :
+                                                                null)
+                                                            : null
+                                                        }
+                                                    />
+                                                </div>
                                             </div>
                                             <div>
                                                 <Label htmlFor="label" value="Note" />
@@ -226,10 +230,16 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
                         </div>
                     </Modal.Body>
                     <Modal.Footer className="flex justify-center py-2">
-                        <Button onClick={() => {
-                            handleSubmit()
-                        }}>Add Transaction</Button>
-                        <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+                        <Button
+                            className="text-white bg-secondaryLight"
+                            onClick={() => { handleSubmit() }}>
+                            Add Transaction
+                        </Button>
+                        <Button
+                            className="text-white bg-secondaryLight"
+                            onClick={() => setOpenModal(false)}>
+                            Cancel
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>

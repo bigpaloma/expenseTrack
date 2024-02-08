@@ -97,9 +97,8 @@ export default function Wallets() {
         <>
             <div className="text-center mt-10 flex justify-center relative">
                 <div className="w-fit text-4xl font-bold sm:relative">
-                    <h1>Your Wallets</h1>
-                    <div className="absolute z-10 left-7 -top-10 sm:top-0 sm:left-64">
-                        <Button className="fixed" onClick={() => setOpenModal(true)}>Add Wallet</Button>
+                    <div className="absolute z-10 left-7 -top-10 sm:-top-5 sm:left-64">
+                        <Button className="fixed bg-secondaryLight" onClick={() => setOpenModal(true)}>Add Wallet</Button>
                     </div>
                 </div>
             </div>
@@ -128,7 +127,7 @@ export default function Wallets() {
             <div className="flex">
                 <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
                     <Modal.Header>Add a new Wallet</Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body className="py-0">
                         <div className="space-y-6">
                             <Formik
                                 onSubmit={handleFormSubmit}
@@ -194,11 +193,19 @@ export default function Wallets() {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={() => {
-                            setOpenModal(false)
-                            handleSubmit()
-                        }}>Add Wallet</Button>
-                        <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+                        <Button
+                            className="bg-secondaryLight"
+                            onClick={() => {
+                                setOpenModal(false)
+                                handleSubmit()
+                            }}>
+                            Add Wallet
+                        </Button>
+                        <Button
+                            className="bg-secondaryLight"
+                            onClick={() => setOpenModal(false)}>
+                            Cancel
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
