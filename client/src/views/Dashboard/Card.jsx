@@ -1,13 +1,17 @@
 import { useSelector } from "react-redux";
+import { format } from "date-fns/format";
+import { config } from "../../Environment";
+
 
 export default function Card({ setTransactionsArr, dataArr, isExpense }) {
 
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
+    const URL = config.url;
 
     const deleteTransaction = async (trx) => {
         const deletedTransactionResponse = await fetch(
-            `https://expense-tracker-api-obou.onrender.com/user/${_id}/${trx._id}`,
+            `${URL}/user/${_id}/${trx._id}`,
             {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
@@ -38,7 +42,10 @@ export default function Card({ setTransactionsArr, dataArr, isExpense }) {
                                             {trx.label} - {trx.category}
                                         </p>
                                         <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                            {trx.date}
+                                            {format(trx.date, "dd-LLL-yy")}
+                                        </p>
+                                        <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                            {format(trx.date, "kk:mm:ss")}
                                         </p>
                                     </div>
                                     <div className="inline-flex flex-col items-center text-base font-semibold text-gray-900 dark:text-white">

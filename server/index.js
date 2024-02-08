@@ -14,8 +14,18 @@ import userRoutes from "./routes/user.js"
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
-app.use(cors()); const corsOptions = {
-    origin: "https://expense-tracker-y9qe.onrender.com" // frontend URI (ReactJS)
+const whitelist = ["https://expense-tracker-y9qe.onrender.com", "http://localhost:3000"]
+// const corsOptions = {
+//     origin: "https://expense-tracker-y9qe.onrender.com" // frontend URI (ReactJS)
+// }
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
 }
 app.use(express.json());
 app.use(cors(corsOptions));

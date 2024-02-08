@@ -77,14 +77,14 @@ export const removeTransaction = async (req, res) => {
         const user = await User.findById(id)
         const deletedTrx = await Transaction.findByIdAndDelete(trxId)
         const walletIdx = user.wallets.findIndex((wallet) => wallet.name === deletedTrx.wallet);
-        if (walletIdx) {
+        if (walletIdx !== -1) {
             const userwallet = user.wallets[walletIdx];
             if (deletedTrx.type === "expense") {
                 userwallet.balance = userwallet.balance + deletedTrx.amount
             } else { userwallet.balance = userwallet.balance - deletedTrx.amount }
         }
-        await User.findByIdAndUpdate(id, { $pull: { transactions: trxId } })
         user.save();
+        await User.findByIdAndUpdate(id, { $pull: { transactions: trxId } })
         const userTransactionsSorted = await Transaction.find({ owner: id }).sort({ _id: -1 })
         res.status(200).json(userTransactionsSorted);
     } catch (err) {

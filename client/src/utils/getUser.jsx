@@ -1,5 +1,10 @@
+import { config } from "../Environment"
+
 export default async function getUserData(id, token) {
-    const response = await fetch(`https://expense-tracker-api-obou.onrender.com/user/${id}`,
+
+    const URL = config.url;
+
+    const response = await fetch(`${URL}/user/${id}`,
         {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` }

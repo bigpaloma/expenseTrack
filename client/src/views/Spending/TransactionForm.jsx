@@ -5,10 +5,12 @@ import { Formik, Form, Field, useField } from "formik"
 import transactionSchema from "./yup/transactionSchema"
 import DatePicker from "react-datepicker";
 import CardRadio from "../../components/CardRadio";
+import { config } from "../../Environment";
 
 export default function TransactionForm({ wallets, userExpenses, userIncome, setTransactionsArr }) {
 
     const token = useSelector((state) => state.token);
+    const URL = config.url
     const [transactionType, setTransactionType] = useState("expense");
     const isExpense = transactionType === "expense";
     const { _id } = useSelector((state) => state.user);
@@ -38,7 +40,7 @@ export default function TransactionForm({ wallets, userExpenses, userIncome, set
         }
         values.category = isNewCat ? values.newCategory : values.category
         const addedTransactionResponse = await fetch(
-            `https://expense-tracker-api-obou.onrender.com/user/${_id}`,
+            `${URL}/user/${_id}`,
             {
                 method: "POST",
                 headers: {

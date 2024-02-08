@@ -1,14 +1,16 @@
 import { useSelector } from "react-redux";
 import format from "date-fns/format";
+import { config } from "../../Environment";
 
 export default function Card({ setTransactionsArr, dataArr, isExpense }) {
 
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
+    const URL = config.url
 
     const deleteTransaction = async (trx) => {
         const deletedTransactionResponse = await fetch(
-            `https://expense-tracker-api-obou.onrender.com/user/${_id}/${trx._id}`,
+            `${URL}/user/${_id}/${trx._id}`,
             {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }

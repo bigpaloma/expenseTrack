@@ -6,11 +6,15 @@
   "scripts": {
     "install-server": "cd server && npm install",
     "start-server": "cd server && node index.js",
+    "start-server-dev": "cd server && nodemon index.js",
     "install-client": "cd client && npm install",
     "build-client": "cd client && npm run build",
     "start-client": "cd client && npm run start"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "tailwind-fluid-typography": "^1.3.0"
+  }
 }

@@ -3,13 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-bgLight dark:bg-bgDark
+  }
+}
 
+html {
+  font-size: 18px;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
-}
-
-* {
   margin: 0;
 }
 
@@ -18,7 +23,6 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-decoration: none;
-  background-color: rgb(188, 159, 79);
 }
 
 img, picture, video, canvas, svg {

@@ -4,6 +4,8 @@ import { Formik, Form } from "formik";
 import * as yup from "yup"
 import { Button, Card, Modal, Label, TextInput } from "flowbite-react";
 import getUserData from "../../utils/getUser";
+import { config } from "../../Environment";
+
 
 export default function Wallets() {
 
@@ -11,6 +13,7 @@ export default function Wallets() {
     const [wallets, setWallets] = useState([])
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
+    const URL = config.url
 
 
     useEffect(() => {
@@ -40,7 +43,7 @@ export default function Wallets() {
 
     const addWallet = async (values, onSubmitProps) => {
         const addedWalletResponse = await fetch(
-            `https://expense-tracker-api-obou.onrender.com/user/${_id}/wallets`,
+            `${URL}/user/${_id}/wallets`,
             {
                 method: "POST",
                 headers: {
@@ -67,7 +70,7 @@ export default function Wallets() {
 
     const deleteWallet = async (wallet) => {
         const deletedWalletResponse = await fetch(
-            `https://expense-tracker-api-obou.onrender.com/user/${_id}/wallet/${wallet._id}`,
+            `${URL}/user/${_id}/wallet/${wallet._id}`,
             {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
